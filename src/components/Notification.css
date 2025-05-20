@@ -1,0 +1,524 @@
+.notification-ui {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: rgba(248, 250, 252, 0.8); /* Light mode with transparency */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  transition: background-color 0.3s ease; /* Added */
+  border-radius: 1rem; /* Optional: for softer edges with blur */
+}
+
+body.dark-mode .notification-ui {
+  background-color: rgba(26, 32, 44, 0.8); /* Dark mode with transparency */
+}
+
+.notification-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary-color); /* Use CSS variable */
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  font-size: 1.15rem;
+  color: var(--text-secondary); /* Use CSS variable */
+  line-height: 1.6;
+}
+
+.steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+}
+
+.step:hover {
+  background-color: #f0f4ff; /* Consider a dark mode hover color */
+}
+
+body.dark-mode .step:hover {
+  background-color: #3a4a63; /* Example dark mode hover */
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--primary-color); /* Use CSS variable */
+  color: white; /* This might need to be a variable if primary-color becomes light */
+  border-radius: 50%;
+  font-weight: bold;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.step-content h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary-color); /* Use CSS variable */
+}
+
+.step-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary); /* Use CSS variable */
+}
+
+.notification-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.notification-img img {
+  width: 60%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
+  background-color: var(--text-secondary); /* Use CSS variable, consider if this is the right one */
+  display: block;
+  margin: 0 auto;
+}
+
+body.dark-mode .notification-img img {
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.08); /* Lighter shadow for dark mode */
+  background-color: var(--component-background-dark); /* Adjust background if needed */
+}
+
+.notification-img img:hover {
+  transform: translateY(-5px);
+}
+
+/* Styles for the new device previews */
+.notification-img {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center the device pair */
+  align-items: center; /* Align items vertically */
+  perspective: 1000px; /* For 3D effects if desired */
+  /* text-align: center; */ /* Original, can be removed if flex handles it */
+}
+
+.device-pair {
+  display: flex;
+  align-items: flex-end; /* Align monitor and iPhone along their bottom */
+  gap: 1rem; /* Space between iPhone and Monitor */
+}
+
+/* iPhone Device Styles */
+.iphone-device {
+  width: 150px; /* Adjust size as needed */
+  height: 300px; /* Adjust size as needed */
+  background-color: #1c1c1e; /* Dark grey, similar to iPhone color */
+  border-radius: 25px; /* Rounded corners */
+  padding: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* To clip the image to the screen */
+  transform: translateY(20px) rotateX(5deg); /* Initial state for animation */
+  opacity: 0;
+}
+
+.iphone-notch {
+  position: absolute;
+  top: 10px;
+  width: 40%;
+  height: 15px;
+  background-color: #000;
+  border-radius: 0 0 8px 8px;
+  z-index: 2;
+}
+
+.iphone-device img {
+  width: 95%; /* Slightly smaller than the container */
+  height: 95%; /* Slightly smaller than the container */
+  object-fit: cover;
+  border-radius: 15px; /* Inner screen rounding */
+  /* Remove individual image styling if handled by device container */
+  /* box-shadow: none; */
+  /* background-color: transparent; */
+}
+
+/* Monitor Device Styles */
+.monitor-device {
+  width: 360px; /* Slightly wider */
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(20px) rotateX(-5deg); /* Initial state for animation */
+  opacity: 0;
+}
+
+.monitor-screen {
+  width: 100%;
+  height: 200px; /* Adjusted height */
+  background-color: #000; /* Screen background (image will cover) */
+  border: 12px solid #333; /* Dark grey bezel, a bit thicker */
+  border-radius: 10px; /* Rounded corners for the screen/bezel unit */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative; /* For z-indexing if needed */
+  margin-bottom: 10px;
+}
+
+.monitor-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block; /* Ensure it behaves as a block */
+}
+
+
+.monitor-stand-bottom {
+  margin-bottom: 20px;
+  width: 35%; /* Base width relative to monitor width */
+  height: 8px;  /* Thin base */
+  background-color: #666; /* Slightly darker grey for base */
+  border-radius: 4px 4px 0 0; /* Rounded top edges of the base */
+}
+
+/* Animation for devices */
+.iphone-device.is-visible {
+  animation: fadeInUpDevice 0.8s 0.2s ease-out forwards; /* Delay iPhone slightly */
+}
+
+.monitor-device.is-visible {
+  animation: fadeInUpDevice 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUpDevice {
+  from {
+    opacity: 0;
+    transform: translateY(30px) rotateX(0deg); /* Start slightly lower */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg); /* End in final position */
+  }
+}
+
+/* Responsive adjustments for devices in Notification section */
+@media (max-width: 1024px) {
+  /* .notification-img might need order adjustment if text comes first */
+}
+
+@media (max-width: 768px) {
+  .device-pair {
+    flex-direction: column; /* Stack them on mobile */
+    align-items: center; /* Center them when stacked */
+    gap: 2rem; /* Increase gap when stacked */
+  }
+
+  .iphone-device {
+    width: 120px;
+    height: 240px;
+    transform: translateY(15px); /* Adjust mobile animation start */
+  }
+
+  .iphone-notch {
+    height: 12px;
+  }
+
+  .monitor-device {
+    width: 200px; 
+    transform: translateY(15px); /* Adjust mobile animation start */
+  }
+  .monitor-screen {
+    height: 115px; 
+    border-width: 10px;
+  }
+
+  .monitor-stand-top {
+    height: 20px;
+  }
+  .monitor-stand-bottom {
+    height: 7px;
+  }
+  /* Adjust mobile animation if different from global fadeInUp */
+  @keyframes fadeInUpDevice { 
+    from {
+      opacity: 0;
+      transform: translateY(20px); 
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .iphone-device {
+    width: 100px;
+    height: 200px;
+  }
+  .monitor-device {
+    width: 170px; 
+  }
+  .monitor-screen {
+    height: 95px; 
+    border-width: 8px;
+  }
+  .monitor-stand-top {
+    height: 18px;
+  }
+  .monitor-stand-bottom {
+    height: 6px;
+  }
+}
+
+/* Ensure existing .notification-img img styles don't conflict */
+/* Commenting out potentially conflicting general styles for .notification-img img */
+/*
+.notification-img img {
+  width: 60%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  background-color: var(--text-secondary); 
+  display: block;
+  margin: 0 auto;
+}
+
+body.dark-mode .notification-img img {
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.08); 
+  background-color: var(--component-background-dark); 
+}
+
+.notification-img img:hover {
+  transform: translateY(-5px);
+}
+*/
+
+/* Large Desktop */
+@media (min-width: 1400px) {
+  .notification-ui {
+    gap: 3rem;
+  }
+
+  .header h1 {
+    font-size: 3.2rem;
+  }
+}
+
+/* Desktop */
+@media (max-width: 1200px) {
+  .notification-ui {
+    gap: 1.5rem;
+  }
+
+  .header h1 {
+    font-size: 2.5rem;
+  }
+
+  .notification-img img {
+    width: 60%;
+  }
+}
+
+/* Small Desktop & Large Tablet */
+@media (max-width: 1024px) {
+  .notification-ui {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1rem; /* Adjusted padding */
+    text-align: center;
+    gap: 1.5rem; /* Adjusted gap */
+  }
+
+  .notification-text {
+    align-items: center;
+    order: 1; /* Text first on tablet */
+  }
+
+  .notification-img {
+    order: 2; /* Image second on tablet */
+    max-width: 320px; /* Limit image width */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .header h1 {
+    font-size: clamp(1.8rem, 6vw, 2.2rem); /* Responsive font size */
+  }
+
+  .header p {
+    font-size: clamp(0.9rem, 4vw, 1.05rem); /* Responsive font size */
+  }
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 0.5rem; /* Add gap between steps */
+  }
+
+  .step {
+    max-width: 90%; /* Adjust max width */
+    text-align: left;
+    padding: 0.5rem; /* Adjust padding */
+  }
+
+  .notification-img img {
+    width: 100%; /* Image takes full width of its container */
+    max-width: 280px; /* Adjust max width for this breakpoint */
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .notification-ui {
+    padding: 1.25rem 0.75rem; /* Adjusted padding */
+    gap: 1.25rem; /* Adjusted gap */
+  }
+
+  .header h1 {
+    font-size: clamp(1.6rem, 5.5vw, 2rem); /* Responsive font size */
+  }
+
+  .header p {
+    font-size: clamp(0.85rem, 3.5vw, 1rem); /* Responsive font size */
+  }
+
+  .step {
+    max-width: 95%; /* Adjust max width */
+    flex-direction: column; /* Stack step number and content */
+    align-items: center; /* Center items in stacked step */
+    text-align: center; /* Center text in step */
+  }
+
+  .step-number {
+    margin-right: 0; /* Remove right margin */
+    margin-bottom: 0.5rem; /* Add bottom margin */
+  }
+
+  .step-content h3 {
+    font-size: clamp(0.9rem, 4vw, 1rem);
+  }
+
+  .step-content p {
+    font-size: clamp(0.8rem, 3vw, 0.9rem);
+  }
+
+  .notification-img {
+    max-width: 280px; /* Adjust image max width */
+  }
+  .notification-img img {
+    max-width: 240px; /* Adjust image max width */
+    border-radius: 0.75rem; /* Adjust border radius */
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .notification-ui {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items */
+    gap: 1.5rem;
+    padding: 1rem 0.5rem;
+    margin-bottom: 1.5rem; /* Adjusted margin */
+  }
+  .notification-img {
+    display: block !important; /* Ensure image is shown, override previous hide */
+    order: 1; /* Image first on mobile */
+    max-width: 250px; /* Adjust image max width */
+    margin-bottom: 1rem;
+  }
+  .notification-img img {
+    width: 100%;
+    max-width: 220px;
+    margin: 0 auto;
+    display: block;
+  }
+  .notification-text {
+    align-items: center;
+    text-align: center;
+    order: 2; /* Text second on mobile */
+    width: 100%; /* Ensure text takes full width */
+  }
+
+  .header h1 {
+    font-size: clamp(1.5rem, 5vw, 1.8rem);
+  }
+
+  .header p {
+    font-size: clamp(0.8rem, 3vw, 0.95rem);
+  }
+
+  .steps-list {
+    gap: 0.75rem;
+  }
+
+  .step {
+    padding: 0.5rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: clamp(1.3rem, 4.5vw, 1.6rem);
+  }
+
+  .header p {
+    font-size: clamp(0.75rem, 2.8vw, 0.9rem);
+  }
+
+  .step-content h3 {
+    font-size: clamp(0.85rem, 3.5vw, 0.9rem);
+  }
+
+  .step-content p {
+    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+  }
+
+  .step-number {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.8rem;
+  }
+
+  .notification-img {
+    max-width: 200px;
+  }
+  .notification-img img {
+    max-width: 180px;
+    border-radius: 0.5rem;
+  }
+}
